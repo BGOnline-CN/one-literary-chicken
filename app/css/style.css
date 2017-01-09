@@ -825,3 +825,34 @@ a.loginClose:hover {
 } 
 
 .chart-div { background-color: #fff; }
+
+/* datePicker */
+.datePicker {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+.datePicker li {
+    float: left;
+    list-style: none;
+    height: 30px;
+}
+.datePicker li input {
+    padding: 3px 12px;
+    max-width: 100px;
+    height: 100%;
+    border: none;
+    background-color: #EAEEF1;
+    border-top: 1px solid #EAEAEA;
+    border-bottom: 1px solid #EAEAEA;
+}
+.datePicker li button {
+    width: 30px;
+    height: 100%;
+    border-radius: 0;
+}
+.datePicker li button i {
+    color: #7895AF;
+}
