@@ -1545,40 +1545,24 @@ App.filter('timeFilter', function() { // 日期格式化
             var t = hours + ':' + minutes;
         }
 
-        // switch(week) {
-        //     case 1:
-        //         return '周一（'+GetRelativeDate(time * 1000)+' '+ t +'）';
-        //     case 2:
-        //         return '周二（'+GetRelativeDate(time * 1000)+' '+ t +'）';
-        //     case 3:
-        //         return '周三（'+GetRelativeDate(time * 1000)+' '+ t +'）';
-        //     case 4:
-        //         return '周四（'+GetRelativeDate(time * 1000)+' '+ t +'）';
-        //     case 5:
-        //         return '周五（'+GetRelativeDate(time * 1000)+' '+ t +'）';
-        //     case 6:
-        //         return '周六（'+GetRelativeDate(time * 1000)+' '+ t +'）';
-        //     case 0:
-        //         return '周日（'+GetRelativeDate(time * 1000)+' '+ t +'）';
-        // }
         switch(week) {
             case 1:
-                return '周一（'+ (new Date()).toLocaleString() +'）';
+                return '周一（'+GetRelativeDate(time * 1000)+' '+ t +'）';
             case 2:
-                return '周二（'+ (new Date()).toLocaleString() +'）';
+                return '周二（'+GetRelativeDate(time * 1000)+' '+ t +'）';
             case 3:
-                return '周三（'+ (new Date()).toLocaleString() +'）';
+                return '周三（'+GetRelativeDate(time * 1000)+' '+ t +'）';
             case 4:
-                return '周四（'+ (new Date()).toLocaleString() +'）';
+                return '周四（'+GetRelativeDate(time * 1000)+' '+ t +'）';
             case 5:
-                return '周五（'+ (new Date()).toLocaleString() +'）';
+                return '周五（'+GetRelativeDate(time * 1000)+' '+ t +'）';
             case 6:
-                return '周六（'+ (new Date()).toLocaleString() +'）';
+                return '周六（'+GetRelativeDate(time * 1000)+' '+ t +'）';
             case 0:
-                return '周日（'+ (new Date()).toLocaleString() +'）';
+                return '周日（'+GetRelativeDate(time * 1000)+' '+ t +'）';
         }
     };
-});
+})
 
 
 
