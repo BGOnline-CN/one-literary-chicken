@@ -5,6 +5,9 @@
             <li>
                 <div date-picker month="month" means="getData()"></div>
             </li>
+            <li style="float: right;">
+                <button class="btn btn-primary bgo-button" ng-click="splitChart()">手动拆分</button>
+            </li>
         </ul>
         <canvas class="chart chart-line"
                 chart-data="data.data"

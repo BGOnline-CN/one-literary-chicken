@@ -1458,10 +1458,10 @@ App.directive('datePicker', function() { // 日期控件
             
             var showDate = function() { // 输入框中展示时间
                 if(dpDate.month + 1 < 10) {
-                    $scope.month = dpDate.year + ' - ' + '0' + parseInt(dpDate.month + 1);
+                    $scope.month = dpDate.year + '-' + '0' + parseInt(dpDate.month + 1);
                     var dateOfDay = (dpDate.year).toString() + '0' + (parseInt(dpDate.month + 1)).toString();
                 }else {
-                    $scope.month = dpDate.year + ' - ' + parseInt(dpDate.month + 1);
+                    $scope.month = dpDate.year + '-' + parseInt(dpDate.month + 1);
                     var dateOfDay = (dpDate.year).toString() + (parseInt(dpDate.month + 1)).toString();
                 }
 
@@ -1472,19 +1472,19 @@ App.directive('datePicker', function() { // 日期控件
             showDate();
 
             $scope.preMonth = function() {
-                dpDate.month--;
+                --dpDate.month;
                 if(dpDate.month < 0) {
                     dpDate.month = 11;
-                    dpDate.year--;
+                    --dpDate.year;
                 }
                 showDate();
             };
             
             $scope.nextMonth = function() {
-                dpDate.month++;
+                ++dpDate.month;
                 if(dpDate.month > 11) {
                     dpDate.month = 0;
-                    dpDate.year++;
+                    ++dpDate.year;
                 }
                 showDate();
             };
@@ -1763,6 +1763,21 @@ App.controller('HomeController', ["$rootScope", "$scope", 'ConnectApi', '$state'
     }
     $scope.getData();
 
+
+    $scope.splitChart = function() {
+        var index = layer.load(2);
+        ConnectApi.start('post', 'admin/index/split_egg', $scope.param).then(function(response) {
+            var data = ConnectApi.data({ res: response, _index: index });
+            if(data.code == 200) {
+                $scope.getData();
+            }
+        }, function(x) { 
+            layer.alert("服务器异常，请稍后再试！", {closeBtn: 0, icon: 5}, function() {
+                layer.closeAll();
+            });
+        });
+    }
+
 }]);
 
 
@@ -1788,7 +1803,7 @@ App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTr
     getData();
 
     $scope.search = function() {
-
+        getData();
     }
 
     $scope.headerPath = 'app/img/header/';
