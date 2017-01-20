@@ -12,6 +12,11 @@
     "translate": "首页"
   },
   {
+    "sref": "app.dataCount",
+    "icon": "fa fa-list",
+    "translate": "数据统计"
+  },
+  {
     "sref": "app.userMgmt",
     "icon": "fa fa-group",
     "translate": "用户管理",

@@ -33,8 +33,8 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', f
     $rootScope.$stateParams = $stateParams;
     $rootScope.$storage = $window.localStorage;
 
-    // $rootScope.rootUrl = 'http://schoolms.thinktorch.cn/public/index.php/';
-    $rootScope.rootUrl = 'http://192.168.1.200/201612chick/phpcode/public/index.php/';
+    $rootScope.rootUrl = 'http://chick.thinktorch.cn/public/index.php/';
+    // $rootScope.rootUrl = 'http://192.168.1.200/201612chick/phpcode/public/index.php/';
     // 禁用模板缓存
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
         if (typeof(toState) !== 'undefined'){
@@ -107,6 +107,12 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         title: '首页',
         templateUrl: helper.basepath('home.html'),
         resolve: helper.resolveFor('chart.js', 'html2canvas')
+    })
+
+    .state('app.dataCount', {
+        url: '/dataCount',
+        title: '数据统计',
+        templateUrl: helper.basepath('dataCount.html')
     })
 
     .state('app.userMgmt', {
@@ -1741,7 +1747,7 @@ App.controller('HomeController', ["$rootScope", "$scope", 'ConnectApi', '$state'
             clockFunction();
         }, 1000)
     }
-    clockFunction();
+    // clockFunction();
     
     $rootScope.user.name = JSON.parse(sessionStorage.paramSession).tname;
     // $rootScope.user.company = JSON.parse(sessionStorage.paramSession).school_name;
@@ -1779,6 +1785,28 @@ App.controller('HomeController', ["$rootScope", "$scope", 'ConnectApi', '$state'
     }
 
 }]);
+
+
+
+// 数据统计
+App.controller('DataCountController', ["$rootScope", "$scope", 'ConnectApi', '$state', 'ParamTransmit', function($rootScope, $scope, ConnectApi, $state, ParamTransmit) {
+    
+    $scope.param = ParamTransmit.getParam();
+    var index = layer.load(2);
+    ConnectApi.start('post', 'admin/index/getStatistics', $scope.param).then(function(response) { 
+        var data = ConnectApi.data({ res: response, _index: index });
+        if(data.code == 200) {
+            $scope.data = data.data;
+        }
+    }, function(x) { 
+        layer.alert("服务器异常，请稍后再试！", {closeBtn: 0, icon: 5}, function() {
+            layer.closeAll();
+        });
+    });
+
+}]);
+
+
 
 
 /* 用户管理 */

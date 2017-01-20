@@ -687,8 +687,9 @@ header {
     height: 100%;
 }
 .module-panel > ul > li > img {
-    width: 100px;
-    height: 100%;
+    width: 60px;
+    height: 60px;
+    margin-top: 20px;
 }
 .module-panel > ul > li > dl {
     margin-left: 20px;
