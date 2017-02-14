@@ -1837,6 +1837,8 @@ App.controller('EggDetailsController', ["$rootScope", "$scope", 'ConnectApi', '$
         checkin.hide();
     }).data('datepicker');
 
+    $scope.headerPath = 'app/img/header/';
+
     $scope.param = ParamTransmit.getParam();
     $scope.current_page = 1;
     var getData = function() {
