@@ -1,0 +1,49 @@
+<div ng-controller="EggDetailsController">
+    <p>收蛋详情列表</p>
+    <div class="bgo-panel">
+        <ul class="bgo-control clearfix">
+            <li>
+                系统总产蛋数：
+                <input type="text" class="bgo-input dpd" placeholder="开始时间" readonly>
+            </li>
+            <li>
+                <div class="bgo-search">
+                    <form>
+                        <input type="text" class="bgo-input dpd" placeholder="结束时间" readonly>
+                        <button type="button" class="btn btn-primary bgo-button" ng-click="search()">查找</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+        <table class="bgo-table">
+            <thead>
+                <tr>
+                    <th>头像</th>
+                    <th>昵称</th>
+                    <th>收蛋数量</th>
+                    <th>下蛋时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="!data.data.length > 0" class="noData">
+                    <td colspan="4">暂无数据</td>
+                </tr>
+                <tr ng-repeat="d in data.data">
+                    <td>
+                        <img class="bgo-header-circle" ng-src="{{ headerPath + d.header + '.png' }}" alt="">
+                    </td>
+                    <td>
+                        <a href="" ng-bind="d.nickname" ng-click="goPage(d.user_id)"></a>
+                    </td>
+                    <td ng-bind="d.egg_num"></td>
+                    <td ng-bind="d.create_time * 1000 | date: 'yyyy-MM-dd hh:mm:ss'"></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div paging total-page="totalpage" current-page="current_page" get-data="getData()"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

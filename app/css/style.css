@@ -857,3 +857,37 @@ a.loginClose:hover {
 .datePicker li button i {
     color: #7895AF;
 }
+/* 排序 */
+.bgo-sort {
+    display: inline-block;
+    vertical-align: middle;
+    border: solid #DDDDDD;
+    border-width: 0 0 0 1px;
+}
+.bgo-sort > li {
+    float: left;
+    padding: 3px 12px;
+    position: relative;
+    border: solid #DDDDDD;
+    border-width: 1px 1px 1px 0;
+}
+.bgo-sort > li > .sort-touch {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.bgo-sort > li.selected {
+    background: #5BC0DE;
+    color: #fff;
+    border: solid #5BC0DE;
+    border-width: 1px 1px 1px 0;
+}
+.bgo-sort > li.selected > i {
+    color: #fff;
+}
+.bgo-sort > li > .sort-ico {
+    color: #ccc;
+    margin-left: 5px;   
+}

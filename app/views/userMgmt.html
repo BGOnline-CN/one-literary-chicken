@@ -3,23 +3,58 @@
     <div class="bgo-panel">
         <ul class="bgo-control clearfix">
             <li>
+                <input type="text" class="bgo-input" ng-model="param.search" placeholder="请输入用户昵称或手机号">
+            </li>
+        </ul>
+        <ul class="bgo-control clearfix">
+            <li>
+                <input type="text" class="bgo-input dpd1" placeholder="开始创建时间" readonly>
+            </li>
+            <li>
+                <input type="text" class="bgo-input dpd1" placeholder="结束创建时间" readonly>
+            </li>
+            <li>
+                <input type="text" class="bgo-input dpd2" placeholder="开始登录时间" readonly>
+            </li>
+            <li>
+                <input type="text" class="bgo-input dpd2" placeholder="结束登录时间" readonly>
+            </li>
+        </ul>
+        <ul class="bgo-control clearfix">
+            <li>
+                <input type="text" class="bgo-input" ng-model="param.chick_num[0]" placeholder="最小小鸡数量">
+            </li>
+            <li>
+                <input type="text" class="bgo-input" ng-model="param.chick_num[1]" placeholder="最大小鸡数量">
+            </li>
+            <li>
+                <input type="text" class="bgo-input" ng-model="param.egg_num[0]" placeholder="最小鸡蛋数量">
+            </li>
+            <li>
+                <input type="text" class="bgo-input" ng-model="param.egg_num[1]" placeholder="最大鸡蛋数量">
+            </li>
+        </ul>
+        <ul class="bgo-control clearfix">
+            <li>
+                <input type="text" class="bgo-input" ng-model="param.land1" placeholder="请输入绿地数量">
+            </li>
+            <li>
                 <div class="bgo-search">
-                    <form ng-submit="search()">
-                        <input type="text" class="bgo-input" ng-model="param.search" placeholder="请输入用户昵称或手机号">
-                        <button type="submit" class="btn btn-primary bgo-button">查找</button>
-                    </form>
+                    <input type="text" class="bgo-input" ng-model="param.land2" placeholder="请输入金地数量">
+                    <button type="button" class="btn btn-primary bgo-button" ng-click="search()">查找</button>
                 </div>
             </li>
         </ul>
         <table class="bgo-table">
             <thead>
                 <tr>
-                    <th>序号</th>
                     <th>头像</th>
                     <th>昵称</th>
                     <th>性别</th>
                     <th>电话</th>
                     <th>状态</th>
+                    <th>小鸡</th>
+                    <th>鸡蛋</th>
                     <th>创建时间</th>
                     <th>最近登录时间</th>
                     <th>操作</th>
@@ -27,14 +62,15 @@
             </thead>
             <tbody>
                 <tr ng-if="!data.data.length > 0" class="noData">
-                    <td colspan="9">暂无数据</td>
+                    <td colspan="10">暂无数据</td>
                 </tr>
                 <tr ng-repeat="d in data.data">
-                    <td ng-bind="$index + 1"></td>
                     <td>
                         <img class="bgo-header-circle" ng-src="{{ headerPath + d.header + '.png' }}" alt="">
                     </td>
-                    <td ng-bind="d.nickname"></td>
+                    <td>
+                        <a href="" ng-bind="d.nickname" ng-click="goPage(d.user_id)"></a>
+                    </td>
                     <td>
                         <span ng-if="d.sex == 1">男</span>
                         <span ng-if="d.sex == 2">女</span>
@@ -44,15 +80,22 @@
                     <td>
                         <div bgo-select val="{{ d.is_locked }}" list="bgoSelectList" means="setIsLocked(d.user_id)"></div>
                     </td>
-                    <td ng-bind="d.create * 1000 | date: 'yyyy-MM-dd hh:mm:ss'"></td>
+                    <td>
+                        <img src="app/img/chicken.png" width="20px" style="vertical-align: text-bottom;" ng-click="recharge(d.user_id, 'chick')" alt="加" title="增加数量">
+                        <span ng-bind="d.total_chick_num"></span>
+                    </td>
+                    <td>
+                        <img src="app/img/egg.png" width="20px" style="vertical-align: text-bottom;" ng-click="recharge(d.user_id, 'egg')" alt="加" title="增加数量">
+                        <span ng-bind="d.total_egg_num"></span>
+                    </td>
+                    <td ng-bind="d.create * 1000 | date: 'yyyy-MM-dd'"></td>
                     <td ng-bind="d.login_time * 1000 | date: 'yyyy-MM-dd hh:mm:ss'"></td>
                     <td>
-                        <button type="button" class="btn btn-info bgo-button" ng-click="goPage(d.user_id)">详情</button>
                         <button type="button" class="btn btn-primary bgo-button" ng-click="edit(d.user_id)">编辑</button>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="9">
+                    <td colspan="10">
                         <div paging total-page="totalpage" current-page="current_page" get-data="getData()"></div>
                     </td>
                 </tr>

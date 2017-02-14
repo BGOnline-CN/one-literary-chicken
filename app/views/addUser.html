@@ -1,0 +1,53 @@
+<div ng-controller="AddUserController">
+    <p>
+        <a ui-sref="app.userMgmt">用户管理</a>
+        >
+        新增用户
+    </p>
+    <div class="bgo-panel">
+        <div class="bgo-panel-title">
+            <span>用户信息</span>
+        </div>
+        <form name="form" class="bgo-form" novalidate>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="form-title">用户名：</td>
+                        <td>
+                            <input type="text" class="bgo-input" ng-model="param.nickname" placeholder="请输入用户名" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-title">手机号：</td>
+                        <td>
+                            <input type="text" class="bgo-input" ng-model="param.phone" placeholder="请输入手机号" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-title">性别：</td>
+                        <td>
+                            <div class="bgo-radio" ng-init="param.sex = 1">
+                                <span>男</span>
+                                <input type="radio" name="sex" ng-model="param.sex" value="1" >
+                                <span>女</span>
+                                <input type="radio" name="sex" ng-model="param.sex" value="2">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-title">密码：</td>
+                        <td>
+                            初始登录密码与支付密码默认为：123456
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button class="btn btn-primary bgo-button" ng-click="save()">确定</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

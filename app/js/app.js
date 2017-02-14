@@ -112,13 +112,26 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     .state('app.dataCount', {
         url: '/dataCount',
         title: '数据统计',
-        templateUrl: helper.basepath('dataCount.html')
+        templateUrl: helper.basepath('dataCount.html'),
+        resolve: helper.resolveFor('jquery', 'datepicker')
+    })
+    .state('app.eggDetails', {
+        url: '/eggDetails',
+        title: '收蛋详情',
+        templateUrl: helper.basepath('eggDetails.html'),
+        resolve: helper.resolveFor('jquery', 'datepicker')
     })
 
     .state('app.userMgmt', {
         url: '/userMgmt',
         title: '用户管理',
-        templateUrl: helper.basepath('userMgmt.html')
+        templateUrl: helper.basepath('userMgmt.html'),
+        resolve: helper.resolveFor('chart.js', 'html2canvas', 'jquery', 'datepicker')
+    })
+    .state('app.addUser', {
+        url: '/addUser',
+        title: '新增用户',
+        templateUrl: helper.basepath('addUser.html')
     })
     .state('app.userInfo', {
         url: '/userInfo',
@@ -1808,9 +1821,67 @@ App.controller('DataCountController', ["$rootScope", "$scope", 'ConnectApi', '$s
 
 
 
+// 收蛋详情
+App.controller('EggDetailsController', ["$rootScope", "$scope", 'ConnectApi', '$state', 'ParamTransmit', function($rootScope, $scope, ConnectApi, $state, ParamTransmit) {
+    
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var checkin = $('.dpd').fdatepicker({
+        format: 'yyyy-mm-dd',
+        onRender: function (date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        var newDate = new Date(ev.date)
+        newDate.setDate(newDate.getDate() + 1);
+        checkin.hide();
+    }).data('datepicker');
+
+    $scope.param = ParamTransmit.getParam();
+    $scope.current_page = 1;
+    var getData = function() {
+        var index = layer.load(2);
+        $scope.param.page = $scope.current_page;
+        ConnectApi.start('post', 'admin/statistics/getgrowlog', $scope.param).then(function(response) {
+            var data = ConnectApi.data({ res: response, _index: index });
+            $scope.data = data.data;
+            $scope.totalpage = data.data.total_page;
+        }, function(x) { 
+            layer.alert("服务器异常，请稍后再试！", {closeBtn: 0, icon: 5}, function() {
+                layer.closeAll();
+            });
+        });
+    }
+    getData();
+
+    $scope.search = function() {
+        $scope.param.time = [];
+        for(var i = 0; i < $('.dpd').length; i++) {
+            $scope.param.time.push($('.dpd').eq(i).val());
+        }
+        getData();
+    }
+
+}]);
+
+
 
 /* 用户管理 */
 App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTransmit', function($scope, ConnectApi, $state, ParamTransmit) {
+
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var checkin = $('.dpd1, .dpd2').fdatepicker({
+        format: 'yyyy-mm-dd',
+        onRender: function (date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        var newDate = new Date(ev.date)
+        newDate.setDate(newDate.getDate() + 1);
+        checkin.hide();
+    }).data('datepicker');
+
 
     $scope.param = ParamTransmit.getParam();
     
@@ -1831,6 +1902,12 @@ App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTr
     getData();
 
     $scope.search = function() {
+        $scope.param.create_time = [];
+        $scope.param.login_time = [];
+        for(var i = 0; i < $('.dpd1').length; i++) {
+            $scope.param.create_time.push($('.dpd1').eq(i).val());
+            $scope.param.login_time.push($('.dpd2').eq(i).val());
+        }
         getData();
     }
 
@@ -1865,6 +1942,31 @@ App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTr
     $scope.edit = function(id) {
         $state.go('app.editUser');
         ParamTransmit.setParam({ user_id: id }, ['token', 'sysuser_id', 'tname'])
+    }
+
+    $scope.recharge = function(id, CorE) {
+        var u = '';
+        layer.prompt({ title: '请输入需要增加的数量：' }, function(val, index) {
+            if(!isNaN(val)) {
+                if(CorE == 'chick') {
+                    u = 'admin/member/add_chick';
+                }else {
+                    u = 'admin/member/add_egg';
+                }
+                $scope.param.num = val;
+                $scope.param.user_id = id,
+                ConnectApi.start('post', u, $scope.param).then(function(response) {
+                    var data = ConnectApi.data({ res: response });
+                    if(data.code == 200) {
+                        layer.msg(data.msg);
+                        getData();
+                    }
+                });
+            }else {
+                layer.msg('请输入正确数额！', {icon: 5});
+            }
+            layer.close(index);
+        });
     }
 
 }]);
@@ -1920,6 +2022,28 @@ App.controller('EditUserController', ["$scope", 'ConnectApi', '$state', 'ParamTr
             var data = ConnectApi.data({ res: response });
             if(data.code == 200) {
                 layer.msg("修改成功！");
+            }
+        }, function(x) { 
+            layer.alert("服务器异常，请稍后再试！", {closeBtn: 0, icon: 5}, function() {
+                layer.closeAll();
+            });
+        });
+    }
+
+}]);
+
+
+
+// 修改用户
+App.controller('AddUserController', ["$scope", 'ConnectApi', '$state', 'ParamTransmit', function($scope, ConnectApi, $state, ParamTransmit) {
+
+    $scope.param = ParamTransmit.getParam();
+  
+    $scope.save = function() {
+        ConnectApi.start('post', 'admin/member/create_user', $scope.param).then(function(response) {
+            var data = ConnectApi.data({ res: response });
+            if(data.code == 200) {
+                layer.msg("添加成功！");
             }
         }, function(x) { 
             layer.alert("服务器异常，请稍后再试！", {closeBtn: 0, icon: 5}, function() {

@@ -17,6 +17,11 @@
     "translate": "数据统计"
   },
   {
+    "sref": "app.eggDetails",
+    "icon": "fa fa-list",
+    "translate": "收蛋详情"
+  },
+  {
     "sref": "app.userMgmt",
     "icon": "fa fa-group",
     "translate": "用户管理",
@@ -24,6 +29,10 @@
       {
         "sref": "app.userMgmt",
         "translate": "用户账号管理"
+      },
+      {
+        "sref": "app.addUser",
+        "translate": "新增用户"
       }
     ]
   },

@@ -1,148 +1,150 @@
 <div ng-controller="DataCountController">
     <p>数据统计</p>
-    <div class="row">
-        <div class="col-xs-6 col-md-4">
-            <div class="module-panel bgo-panel">
-                <ul>
-                    <li>
-                        <img src="app/img/heder_then.png" alt="">
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>人数</dt>
-                            <dd>系统当前人数统计</dd>
-                            <dd ng-bind="data.totalUser + '人'"></dd>
-                        </dl>
-                    </li>
-                </ul>
+    <div class="bgo-panel">
+        <div class="row">
+            <div class="col-xs-6 col-md-4">
+                <div class="module-panel bgo-panel">
+                    <ul>
+                        <li>
+                            <img src="app/img/heder_then.png" alt="">
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>人数</dt>
+                                <dd>系统当前人数统计</dd>
+                                <dd ng-bind="data.totalUser + '人'"></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6 col-md-4">
-            <div class="module-panel bgo-panel">
-                <ul>
-                    <li>
-                        <img src="app/img/defaultHeader.png" alt="">
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>新用户</dt>
-                            <dd>系统昨日新增用户</dd>
-                            <dd ng-bind="data.yRegTotalUser + '人'"></dd>
-                        </dl>
-                    </li>
-                </ul>
+            <div class="col-xs-6 col-md-4">
+                <div class="module-panel bgo-panel">
+                    <ul>
+                        <li>
+                            <img src="app/img/defaultHeader.png" alt="">
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>新用户</dt>
+                                <dd>系统昨日新增用户</dd>
+                                <dd ng-bind="data.yRegTotalUser + '人'"></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6 col-md-4">
-            <div class="module-panel bgo-panel">
-                <ul>
-                    <li>
-                        <img src="app/img/chicken.png" alt="">
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>小鸡</dt>
-                            <dd>系统总小鸡数量统计</dd>
-                            <dd ng-bind="data.totalChick + '只'"></dd>
-                        </dl>
-                    </li>
-                </ul>
+            <div class="col-xs-6 col-md-4">
+                <div class="module-panel bgo-panel">
+                    <ul>
+                        <li>
+                            <img src="app/img/chicken.png" alt="">
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>小鸡</dt>
+                                <dd>系统总小鸡数量统计</dd>
+                                <dd ng-bind="data.totalChick + '只'"></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6 col-md-4">
-            <div class="module-panel bgo-panel">
-                <ul>
-                    <li>
-                        <img src="app/img/xj-01.png" alt="">
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>交易小鸡</dt>
-                            <dd>系统总交易小鸡数量统计</dd>
-                            <dd ng-bind="data.chickNum + '只'"></dd>
-                        </dl>
-                    </li>
-                </ul>
+            <div class="col-xs-6 col-md-4">
+                <div class="module-panel bgo-panel">
+                    <ul>
+                        <li>
+                            <img src="app/img/xj-01.png" alt="">
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>交易小鸡</dt>
+                                <dd>系统总交易小鸡数量统计</dd>
+                                <dd ng-bind="data.chickNum + '只'"></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6 col-md-4">
-            <div class="module-panel bgo-panel">
-                <ul>
-                    <li>
-                        <img src="app/img/egg.png" alt="">
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>鸡蛋</dt>
-                            <dd>系统当前总鸡蛋数量</dd>
-                            <dd ng-bind="data.totalEgg + '个'"></dd>
-                        </dl>
-                    </li>
-                </ul>
+            <div class="col-xs-6 col-md-4">
+                <div class="module-panel bgo-panel">
+                    <ul>
+                        <li>
+                            <img src="app/img/egg.png" alt="">
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>鸡蛋</dt>
+                                <dd>系统当前总鸡蛋数量</dd>
+                                <dd ng-bind="data.totalEgg + '个'"></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6 col-md-4">
-            <div class="module-panel bgo-panel">
-                <ul>
-                    <li>
-                        <img src="app/img/xj-egg.png" alt="">
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>昨日生蛋</dt>
-                            <dd>系统昨日总生蛋数量</dd>
-                            <dd ng-bind="data.dayTotalEgg + '个'"></dd>
-                        </dl>
-                    </li>
-                </ul>
+            <div class="col-xs-6 col-md-4">
+                <div class="module-panel bgo-panel">
+                    <ul>
+                        <li>
+                            <img src="app/img/xj-egg.png" alt="">
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>昨日生蛋</dt>
+                                <dd>系统昨日总生蛋数量</dd>
+                                <dd ng-bind="data.dayTotalEgg + '个'"></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6 col-md-4">
-            <div class="module-panel bgo-panel">
-                <ul>
-                    <li>
-                        <img src="app/img/xj-egg.png" alt="">
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>上月生蛋</dt>
-                            <dd>系统上月总生蛋数量</dd>
-                            <dd ng-bind="data.monthTotalEgg + '个'"></dd>
-                        </dl>
-                    </li>
-                </ul>
+            <div class="col-xs-6 col-md-4">
+                <div class="module-panel bgo-panel">
+                    <ul>
+                        <li>
+                            <img src="app/img/xj-egg.png" alt="">
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>上月生蛋</dt>
+                                <dd>系统上月总生蛋数量</dd>
+                                <dd ng-bind="data.monthTotalEgg + '个'"></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6 col-md-4">
-            <div class="module-panel bgo-panel">
-                <ul>
-                    <li>
-                        <img src="app/img/xj-egg.png" alt="">
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>总生蛋</dt>
-                            <dd>系统总生蛋数量</dd>
-                            <dd ng-bind="data.totalLayEgg + '个'"></dd>
-                        </dl>
-                    </li>
-                </ul>
+            <div class="col-xs-6 col-md-4">
+                <div class="module-panel bgo-panel">
+                    <ul>
+                        <li>
+                            <img src="app/img/xj-egg.png" alt="">
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>总生蛋</dt>
+                                <dd>系统总生蛋数量</dd>
+                                <dd ng-bind="data.totalLayEgg + '个'"></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6 col-md-4">
-            <div class="module-panel bgo-panel">
-                <ul>
-                    <li>
-                        <img src="app/img/xj-egg.png" alt="">
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>交易鸡蛋</dt>
-                            <dd>系统总交易鸡蛋数量</dd>
-                            <dd ng-bind="data.eggNum + '个'"></dd>
-                        </dl>
-                    </li>
-                </ul>
+            <div class="col-xs-6 col-md-4">
+                <div class="module-panel bgo-panel">
+                    <ul>
+                        <li>
+                            <img src="app/img/xj-egg.png" alt="">
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>交易鸡蛋</dt>
+                                <dd>系统总交易鸡蛋数量</dd>
+                                <dd ng-bind="data.eggNum + '个'"></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
