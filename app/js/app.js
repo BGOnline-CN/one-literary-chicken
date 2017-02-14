@@ -1829,7 +1829,7 @@ App.controller('EggDetailsController', ["$rootScope", "$scope", 'ConnectApi', '$
     var checkin = $('.dpd').fdatepicker({
         format: 'yyyy-mm-dd',
         onRender: function (date) {
-            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            return date.valueOf() < now.valueOf() ? '' : '';
         }
     }).on('changeDate', function (ev) {
         var newDate = new Date(ev.date)
