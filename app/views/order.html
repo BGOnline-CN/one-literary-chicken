@@ -1,0 +1,79 @@
+<div ng-controller="OrderController">
+    <p>交易明细</p>
+    <div class="bgo-panel">
+        <ul class="bgo-control clearfix">
+            <li>
+                <input type="text" class="bgo-input" ng-model="param.sell_phone" placeholder="请输入手机号（转出）">
+            </li>
+            <li>
+                <input type="text" class="bgo-input" ng-model="param.buy_phone" placeholder="请输入手机号（转入）">
+            </li>
+        </ul>
+        <ul class="bgo-control clearfix">
+            <li>
+                <input type="text" class="bgo-input dpd1" placeholder="开始交易时间" readonly>
+            </li>
+            <li>
+                <input type="text" class="bgo-input dpd1" placeholder="结束交易时间" readonly>
+            </li>
+        </ul>
+        <ul class="bgo-control clearfix">
+            <li>
+                <select class="bgo-select"
+                        style="padding: 6px 13px;"
+                        ng-model="param.type">
+                    <option value="">全部</option>
+                    <option value="1">小鸡</option>
+                    <option value="2">鸡蛋</option>
+                </select>
+            </li>
+            <li>
+                <input type="text" class="bgo-input" ng-model="param.num[0]" placeholder="最小交易数量">
+            </li>
+            <li>
+                <div class="bgo-search">
+                    <input type="text" class="bgo-input" ng-model="param.num[1]" placeholder="最大交易数量">
+                    <button type="button" class="btn btn-primary bgo-button" ng-click="search()">查找</button>
+                </div>
+            </li>
+        </ul>
+        <table class="bgo-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>手机号（转出）</th>
+                    <th>手机号（转入）</th>
+                    <th>变更数额</th>
+                    <th>手续费</th>
+                    <th>类型</th>
+                    <th>说明</th>
+                    <th>交易时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="!data.data.length > 0" class="noData">
+                    <td colspan="8">暂无数据</td>
+                </tr>
+                <tr ng-repeat="d in data.data">
+                    <td ng-bind="($index + 1) * current_page"></td>
+                    <td ng-bind="d.sell_phone"></td>
+                    <td ng-bind="d.buy_phone"></td>
+                    <td ng-bind="d.num"></td>
+                    <td ng-bind="d.fee"></td>
+                    <td>
+                        <span ng-if="d.type == 1">小鸡</span>
+                        <span ng-if="d.type == 2">鸡蛋</span>
+                    </td>
+                    <td ng-bind="d.sell_name + '向' + d.buy_name + '转入' + d.num">
+                    </td>
+                    <td ng-bind="d.create_time * 1000 | date: 'yyyy-MM-dd'"></td>
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div paging total-page="totalpage" current-page="current_page" get-data="getData()"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

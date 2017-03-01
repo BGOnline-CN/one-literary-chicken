@@ -22,6 +22,11 @@
     "translate": "收蛋详情"
   },
   {
+    "sref": "app.order",
+    "icon": "fa fa-list",
+    "translate": "交易明细"
+  },
+  {
     "sref": "app.userMgmt",
     "icon": "fa fa-group",
     "translate": "用户管理",

@@ -48,54 +48,59 @@
         <table class="bgo-table">
             <thead>
                 <tr>
+                    <th>序号</th>
                     <th>头像</th>
+                    <th>手机号</th>
                     <th>昵称</th>
                     <th>性别</th>
-                    <th>电话</th>
-                    <th>状态</th>
-                    <th>小鸡</th>
-                    <th>鸡蛋</th>
                     <th>创建时间</th>
-                    <th>最近登录时间</th>
-                    <th>操作</th>
+                    <th>登录时间</th>
+                    <th>金地</th>
+                    <th>绿地</th>
+                    <th>总鸡蛋</th>
+                    <th>总小鸡</th>
+                    <th>状态</th>
+                    <th style="width: 100px;">操作</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-if="!data.data.length > 0" class="noData">
-                    <td colspan="10">暂无数据</td>
+                    <td colspan="13">暂无数据</td>
                 </tr>
                 <tr ng-repeat="d in data.data">
+                    <td ng-bind="($index + 1) * current_page"></td>
                     <td>
                         <img class="bgo-header-circle" ng-src="{{ headerPath + d.header + '.png' }}" alt="">
                     </td>
-                    <td>
-                        <a href="" ng-bind="d.nickname" ng-click="goPage(d.user_id)"></a>
-                    </td>
+                    <td ng-bind="d.phone"></td>
+                    <td ng-bind="d.nickname"></td>
                     <td>
                         <span ng-if="d.sex == 1">男</span>
                         <span ng-if="d.sex == 2">女</span>
                         <span ng-if="d.sex != 1 && d.sex !=2">女</span>
                     </td>
-                    <td ng-bind="d.phone"></td>
+                    <td ng-bind="d.create * 1000 | date: 'yyyy-MM-dd'"></td>
+                    <td ng-bind="d.login_time * 1000 | date: 'yyyy-MM-dd'"></td>
+                    <td ng-bind="d.land2"></td>
+                    <td ng-bind="d.land1"></td>
                     <td>
-                        <div bgo-select val="{{ d.is_locked }}" list="bgoSelectList" means="setIsLocked(d.user_id)"></div>
+                        <img src="app/img/egg.png" width="20px" style="vertical-align: text-bottom;" ng-click="recharge(d.user_id, 'egg')" alt="加" title="增加数量">
+                        <span ng-bind="d.total_egg_num"></span>
                     </td>
                     <td>
                         <img src="app/img/chicken.png" width="20px" style="vertical-align: text-bottom;" ng-click="recharge(d.user_id, 'chick')" alt="加" title="增加数量">
                         <span ng-bind="d.total_chick_num"></span>
                     </td>
                     <td>
-                        <img src="app/img/egg.png" width="20px" style="vertical-align: text-bottom;" ng-click="recharge(d.user_id, 'egg')" alt="加" title="增加数量">
-                        <span ng-bind="d.total_egg_num"></span>
+                        <div bgo-select val="{{ d.is_locked }}" list="bgoSelectList" means="setIsLocked(d.user_id)"></div>
                     </td>
-                    <td ng-bind="d.create * 1000 | date: 'yyyy-MM-dd'"></td>
-                    <td ng-bind="d.login_time * 1000 | date: 'yyyy-MM-dd hh:mm:ss'"></td>
                     <td>
+                        <button style="margin-bottom: 5px;" type="button" class="btn btn-info bgo-button" ng-click="goPage(d.user_id)">详情</button>
                         <button type="button" class="btn btn-primary bgo-button" ng-click="edit(d.user_id)">编辑</button>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="10">
+                    <td colspan="13">
                         <div paging total-page="totalpage" current-page="current_page" get-data="getData()"></div>
                     </td>
                 </tr>

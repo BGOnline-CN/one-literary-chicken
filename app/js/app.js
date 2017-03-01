@@ -37,7 +37,7 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', f
     // $rootScope.rootUrl = 'http://192.168.1.200/201612chick/phpcode/public/index.php/';
     // 禁用模板缓存
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-        if (typeof(toState) !== 'undefined'){
+        if(typeof(toState) !== 'undefined') {
           $templateCache.remove(toState.templateUrl);
         }
     });
@@ -126,6 +126,12 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/userMgmt',
         title: '用户管理',
         templateUrl: helper.basepath('userMgmt.html'),
+        resolve: helper.resolveFor('chart.js', 'html2canvas', 'jquery', 'datepicker')
+    })
+    .state('app.order', {
+        url: '/order',
+        title: '交易明细',
+        templateUrl: helper.basepath('order.html'),
         resolve: helper.resolveFor('chart.js', 'html2canvas', 'jquery', 'datepicker')
     })
     .state('app.addUser', {
@@ -1876,7 +1882,7 @@ App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTr
     var checkin = $('.dpd1, .dpd2').fdatepicker({
         format: 'yyyy-mm-dd',
         onRender: function (date) {
-            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            return date.valueOf() < now.valueOf() ? '' : '';
         }
     }).on('changeDate', function (ev) {
         var newDate = new Date(ev.date)
@@ -1969,6 +1975,52 @@ App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTr
             }
             layer.close(index);
         });
+    }
+
+}]);
+
+
+/* 交易明细 */
+App.controller('OrderController', ["$scope", 'ConnectApi', '$state', 'ParamTransmit', function($scope, ConnectApi, $state, ParamTransmit) {
+
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var checkin = $('.dpd1').fdatepicker({
+        format: 'yyyy-mm-dd',
+        onRender: function (date) {
+            return date.valueOf() < now.valueOf() ? '' : '';
+        }
+    }).on('changeDate', function (ev) {
+        var newDate = new Date(ev.date)
+        newDate.setDate(newDate.getDate() + 1);
+        checkin.hide();
+    }).data('datepicker');
+
+
+    $scope.param = ParamTransmit.getParam();
+    
+    $scope.current_page = 1;
+    $scope.getData = function() {
+        var index = layer.load(2);
+        $scope.param.page = $scope.current_page;
+        ConnectApi.start('post', 'admin/member/get_transaction_log', $scope.param).then(function(response) {
+            var data = ConnectApi.data({ res: response, _index: index });
+            $scope.data = data.data;
+            $scope.totalpage = data.data.total_page;
+        }, function(x) { 
+            layer.alert("服务器异常，请稍后再试！", {closeBtn: 0, icon: 5}, function() {
+                layer.closeAll();
+            });
+        });
+    }
+    $scope.getData();
+
+    $scope.search = function() {
+        $scope.param.time = [];
+        for(var i = 0; i < $('.dpd1').length; i++) {
+            $scope.param.time.push($('.dpd1').eq(i).val());
+        }
+        $scope.getData();
     }
 
 }]);

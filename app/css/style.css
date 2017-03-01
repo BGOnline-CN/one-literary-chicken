@@ -315,6 +315,7 @@ header {
 /* 数量选择器 */
 .bgo-num-select {
     display: inline-block;
+    vertical-align: middle;
 }
 .bgo-num-select > li {
     float: left;
