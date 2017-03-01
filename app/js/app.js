@@ -1894,7 +1894,7 @@ App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTr
     $scope.param = ParamTransmit.getParam();
     
     $scope.current_page = 1;
-    var getData = function() {
+    $scope.getData = function() {
         var index = layer.load(2);
         $scope.param.page = $scope.current_page;
         ConnectApi.start('post', 'admin/member/get_member_list', $scope.param).then(function(response) {
@@ -1907,7 +1907,7 @@ App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTr
             });
         });
     }
-    getData();
+    $scope.getData();
 
     $scope.search = function() {
         $scope.param.create_time = [];
@@ -1916,7 +1916,7 @@ App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTr
             $scope.param.create_time.push($('.dpd1').eq(i).val());
             $scope.param.login_time.push($('.dpd2').eq(i).val());
         }
-        getData();
+        $scope.getData();
     }
 
     $scope.headerPath = 'app/img/header/';
@@ -1933,7 +1933,7 @@ App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTr
         ConnectApi.start('post', 'admin/member/set_member', $scope.param).then(function(response) {
             var data = ConnectApi.data({ res: response });
             if(data.code == 200) {
-                getData();
+                $scope.getData();
             }
         }, function(x) { 
             layer.alert("服务器异常，请稍后再试！", {closeBtn: 0, icon: 5}, function() {
@@ -1967,7 +1967,7 @@ App.controller('UserMgmtController', ["$scope", 'ConnectApi', '$state', 'ParamTr
                     var data = ConnectApi.data({ res: response });
                     if(data.code == 200) {
                         layer.msg(data.msg);
-                        getData();
+                        $scope.getData();
                     }
                 });
             }else {
