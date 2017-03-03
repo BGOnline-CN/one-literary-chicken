@@ -154,7 +154,16 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         title: '编辑用户',
         templateUrl: helper.basepath('editUser.html')
     })
-    
+    .state('app.notice', {
+        url: '/notice',
+        title: '公告管理',
+        templateUrl: helper.basepath('notice.html')
+    })
+    .state('app.addArticle', {
+        url: '/addArticle',
+        title: '编辑公告',
+        templateUrl: helper.basepath('addArticle.html')
+    })
 
     .state('app.baseConfig', {
         url: '/baseConfig',
@@ -2088,7 +2097,7 @@ App.controller('EditUserController', ["$scope", 'ConnectApi', '$state', 'ParamTr
 
 
 
-// 修改用户
+// 添加用户
 App.controller('AddUserController', ["$scope", 'ConnectApi', '$state', 'ParamTransmit', function($scope, ConnectApi, $state, ParamTransmit) {
 
     $scope.param = ParamTransmit.getParam();
@@ -2108,6 +2117,62 @@ App.controller('AddUserController', ["$scope", 'ConnectApi', '$state', 'ParamTra
 
 }]);
 
+
+// 文章列表
+App.controller('NoticeController', ["$scope", '$sce', 'ConnectApi', '$state', 'ParamTransmit', function($scope, $sce, ConnectApi, $state, ParamTransmit) {
+
+
+    // 0 新增
+    // 1 修改
+    // 2 查看
+    // 3 删除
+
+    $scope.current_page = 1;
+    $scope.param = ParamTransmit.getParam();
+    $scope.getFaqList = function() {
+        var index = layer.load(2);
+        $scope.param.page = $scope.current_page;
+        ConnectApi.start('post', 'admin/Notice/noticeList', $scope.param).then(function(response) {
+            var data = ConnectApi.data({ res: response, _index: index });
+            $scope.data = data.data;
+            $scope.totalpage = data.data.total_page;
+        });
+    }
+    $scope.getFaqList();
+
+    $scope.delArticle = function(id) {
+        $scope.param.notice_id = id;
+        ConnectApi.start('post', 'admin/Notice/delNotice', $scope.param).then(function(response) {
+            var data = ConnectApi.data({ res: response });
+            $scope.data = data.data;
+            if(data.code == 200) {
+                $scope.getFaqList();
+            }
+        });
+    }
+    
+
+}]);
+
+
+// 编辑文章
+App.controller('AddArticleController', ["$scope", '$rootScope', '$sce', 'ConnectApi', '$state', 'ParamTransmit', function($scope, $rootScope, $sce, ConnectApi, $state, ParamTransmit) {
+
+    $scope.param = ParamTransmit.getParam();
+
+    $scope.save = function() {
+        var index = layer.load(2);
+        ConnectApi.start('post', 'admin/Notice/createNotice', $scope.param).then(function(response) {
+            var data = ConnectApi.data({ res: response, _index: index});
+            $scope.data = data.data;
+            if(data.code == 200) {
+                layer.msg('保存成功！');
+            }
+            $state.go('app.notice');
+        });
+    }
+
+}]);
 
 
 // 基础配置

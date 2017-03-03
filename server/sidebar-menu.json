@@ -42,6 +42,11 @@
     ]
   },
   {
+    "sref": "app.notice",
+    "icon": "fa fa-group",
+    "translate": "公告管理"
+  },
+  {
     "sref": "app.baseConfig",
     "icon": "fa fa-cogs",
     "translate": "系统配置",

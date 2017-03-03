@@ -1,0 +1,40 @@
+<div ng-controller="NoticeController">
+    <p>公告管理</p>
+    <div class="bgo-panel">
+        <ul class="bgo-control clearfix">
+            <li>
+                <button type="button" class="btn btn-primary bgo-button" ui-sref="app.addArticle">新增</button>
+            </li>
+        </ul>
+        <table class="bgo-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>标题</th>
+                    <th>内容</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="!data.data.length > 0" class="noData">
+                    <td colspan="5">暂无数据</td>
+                </tr>
+                <tr ng-repeat="d in data.data">
+                    <td ng-bind="($index + 1) * current_page"></td>
+                    <td ng-bind="d.title"></td>
+                    <td ng-bind="d.content | limitTo: 80"></td>
+                    <td ng-bind="d.create_time * 1000 | date: 'yyyy-MM-dd'"></td>
+                    <td>
+                        <button type="button" class="btn btn-danger bgo-button" ng-click="delArticle(d.notice_id)">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <div paging total-page="totalpage" current-page="current_page" get-data="getFaqList()"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
