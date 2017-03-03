@@ -21,7 +21,7 @@
                     <td colspan="5">暂无数据</td>
                 </tr>
                 <tr ng-repeat="d in data.data">
-                    <td ng-bind="($index + 1) * current_page"></td>
+                    <td ng-bind="data.per_page * (current_page-1) + $index + 1"></td>
                     <td ng-bind="d.title"></td>
                     <td ng-bind="d.content | limitTo: 80"></td>
                     <td ng-bind="d.create_time * 1000 | date: 'yyyy-MM-dd'"></td>
