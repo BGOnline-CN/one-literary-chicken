@@ -160,7 +160,6 @@ header {
     border: solid #E2E2E2; 
     border-width: 0px 1px 1px 0px; 
     padding: 10px 15px;
-    word-break: keep-all;
 }
 .bgo-table input, .bgo-table select {
     min-width: 0;
