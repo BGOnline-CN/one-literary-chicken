@@ -39,7 +39,16 @@
                                 <td class="form-title">我的上线：</td>
                                 <td>
                                     <span ng-if="!data.parentUserData">无</span>
-                                    <a ng-if="data.parentUserData" ui-sref="app.slaveAndmaster" ng-click="goPage(data.parentUserData.user_id)" ng-bind="data.parentUserData.nickname"></a>
+                                    <a ng-if="data.parentUserData && !isEdit" ui-sref="app.slaveAndmaster" ng-click="goPage(data.parentUserData.user_id)" ng-bind="data.parentUserData.nickname"></a>
+                                    <a style="color: red;" ng-show="data.parentUserData && !isEdit" ng-click="changeIsEdit()" style="margin-left: 5px;">修改</a>
+                                    <select class="bgo-select" 
+                                            required
+                                            ng-change="editTopUser()"
+                                            ng-show="isEdit"
+                                            ng-model="param.parent_user_id"
+                                            ng-options="t.user_id as t.nickname for t in data.userList">
+                                            <option value="">-- 请选择 --</option>
+                                    </select>
                                 </td>
                             </tr>
                         </tbody>

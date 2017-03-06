@@ -142,7 +142,8 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     .state('app.userInfo', {
         url: '/userInfo',
         title: '会员详情',
-        templateUrl: helper.basepath('userInfo.html')
+        templateUrl: helper.basepath('userInfo.html'),
+        resolve: helper.resolveFor('jquery', 'isteven-multi-select')
     })
     .state('app.slaveAndmaster', {
         url: '/slaveAndmaster',
@@ -355,7 +356,9 @@ App
                                          'vendor/scrollbar/smooth-scrollbar.js',
                                          'vendor/scrollbar/angular-smooth-scrollbar.js']},
       { name: 'chart.js', files: ['vendor/angular-chart/Chart.js',
-                                  'vendor/angular-chart/angular-chart.js']}
+                                  'vendor/angular-chart/angular-chart.js']},
+      { name: 'isteven-multi-select', files: ['vendor/angular-multi-select/isteven-multi-select.css',
+                          'vendor/angular-multi-select/isteven-multi-select.js']}
     ]
 
   })
@@ -2059,6 +2062,26 @@ App.controller('UserInfoController', ["$scope", 'ConnectApi', '$state', 'ParamTr
   
     $scope.goPage = function(id) {
         ParamTransmit.setParam({ user_id: id }, ['token', 'sysuser_id', 'tname'])
+    }
+
+    $scope.isEdit = false; // 修改上线
+    $scope.changeIsEdit = function() {
+        $scope.isEdit = !$scope.isEdit;
+    }
+
+    $scope.editTopUser = function() {
+        ConnectApi.start('post', 'admin/member/set_parent_user', $scope.param).then(function(response) {
+            var data = ConnectApi.data({ res: response });
+            if(data.code == 200) {
+                layer.msg(data.msg);
+                getData();
+                $scope.changeIsEdit();
+            }
+        }, function(x) { 
+            layer.alert("服务器异常，请稍后再试！", {closeBtn: 0, icon: 5}, function() {
+                layer.closeAll();
+            });
+        });
     }
 
 }]);
